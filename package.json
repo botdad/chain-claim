@@ -1,0 +1,29 @@
+{
+  "name": "@botdad/chain-claim",
+  "description": "On chain claim code verification and off chain generation using only ECSDA signatures",
+  "license": "MIT",
+  "version": "0.0.1",
+  "homepage": "",
+  "keywords": [],
+  "engines": {
+    "node": ">=10"
+  },
+  "dependencies": {
+    "@typechain/ethers-v5": "^8.0.5",
+    "ethers": "^5.5.2",
+    "prettier": "^2.3.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.10",
+    "solhint": "^3.3.4",
+    "solhint-plugin-prettier": "^0.0.5",
+    "solidity-coverage": "^0.7.16",
+    "ts-node": "^10.0.0",
+    "typechain": "^6.1.0",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "compile-types": "typechain --target ethers-v5 --out-dir scripts/types './out/**/*.json'",
+    "build": "forge build && yarn compile-types",
+    "generate-code": "ts-node scripts/generateClaimCode.ts",
+    "prepare-tx": "ts-node scripts/prepareTx.ts"
+  }
+}

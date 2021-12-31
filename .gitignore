@@ -1,2 +1,5 @@
+.vscode
 cache/
 out/
+node_modules/
+scripts/types/
