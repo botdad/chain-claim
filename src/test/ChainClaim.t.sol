@@ -68,12 +68,9 @@ contract ChainClaimTestSetup {
   uint256 claimCodePkey =
     0x55b7b79aa0a71a634d00343ecb270adc0105d11566c7fcafa9381272d8d26554;
 
-  // pregenerated issuer signature
-  uint8 claimCodeV = 27;
-  bytes32 claimCodeR =
-    0x8039eb84c27e0985fa2bc2dd5277e8199a8cf356fa1901721b0b23d9f075870e;
-  bytes32 claimCodeS =
-    0x7f16c1832227911326c3141866eb12050e88b07a3a79ff3d23d5fdd4d02f89cf;
+  uint8 claimCodeV;
+  bytes32 claimCodeR;
+  bytes32 claimCodeS;
 
   function setUp() public {
     ExampleImplementation deployedEx = new ExampleImplementation(
@@ -81,6 +78,11 @@ contract ChainClaimTestSetup {
       name
     );
     vm.etch(exAddress, address(deployedEx).code);
+
+    (claimCodeV, claimCodeR, claimCodeS) = vm.sign(
+      issuerPkey,
+      target._genDataHash(claimCodeAddress)
+    );
   }
 }
 
@@ -138,7 +140,6 @@ contract ChainClaimTest is ChainClaimTestSetup, DSTest {
     bytes32 hash = target._genDataHash(someAddress);
 
     (uint8 v, bytes32 r, bytes32 s) = vm.sign(claimCodePkey, hash);
-
     bool valid = target._isValidClaimantSig(
       claimCodeAddress,
       someAddress,
@@ -166,6 +167,7 @@ contract ChainClaimTest is ChainClaimTestSetup, DSTest {
     );
     assertTrue(!valid);
 
+    vm.expectRevert("ECDSA: invalid signature");
     valid = target._isValidClaimantSig(
       claimCodeAddress,
       someAddress,
@@ -175,6 +177,7 @@ contract ChainClaimTest is ChainClaimTestSetup, DSTest {
     );
     assertTrue(!valid);
 
+    vm.expectRevert("ECDSA: invalid signature 'v' value");
     valid = target._isValidClaimantSig(
       claimCodeAddress,
       someAddress,
