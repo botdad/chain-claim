@@ -42,7 +42,7 @@ forge test
 
 ### Generate a claim code
 
-set [`ISSUER_PRIVATE_KEY`](./scripts/generateClaimCode.ts.ts#L4) and [`DEPLOYED_CLAIM_CONTRACT_ADDRESS`](./scripts/generateClaimCode.ts.ts#L5).
+set [`ISSUER_PRIVATE_KEY`](./scripts/generateClaimCode.ts#L4) and [`DEPLOYED_CLAIM_CONTRACT_ADDRESS`](./scripts/generateClaimCode.ts#L5).
 
 ```sh
 yarn generate-code
@@ -50,7 +50,7 @@ yarn generate-code
 
 ### Prepare example transaction for claim
 
-set [`claimCode`](./scripts/prepareTx.ts.ts#L10).
+set [`claimCode`](./scripts/prepareTx.ts#L10).
 
 ```sh
 yarn prepare-tx
