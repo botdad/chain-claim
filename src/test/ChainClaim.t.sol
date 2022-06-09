@@ -172,7 +172,7 @@ contract ChainClaimTest is ChainClaimTestSetup, DSTest {
       claimCodeAddress,
       someAddress,
       v,
-      bytes32(uint256(r) + 2),
+      bytes32(uint256(r) + 1),
       s
     );
     assertTrue(!valid);
